@@ -94,3 +94,40 @@ This project delivers an **internal AI intelligence platform** that enables stak
 - **Testing**: Pytest
 
 ---
+## 📊 Task 1: EDA & Preprocessing 
+
+**Key Findings:**
+- Analyzed 50,000 complaint records (sample)
+- 92.5% of complaints are about "Credit reporting"
+- Only 1.1% about Credit Cards, 0.7% about Savings Accounts
+- **Critical Issue**: 98.7% of complaints lack narrative text!
+- Filtered dataset: 50 records with narratives for target products
+
+- Performed fast EDA on a **50,000-record sample** from a large-scale complaints dataset (>5GB)
+- Analyzed key fields:
+  - Date received
+  - Product
+  - Issue
+  - Consumer complaint narrative
+  - Company
+  - State
+- Identified severe class imbalance and missing narratives (~98%)
+- Filtered dataset to **target financial products**:
+  - Credit cards
+  - Personal loans
+  - Savings accounts
+  - Money transfers
+- Removed empty complaint narratives
+- Applied basic text cleaning
+- Generated a clean, RAG-ready dataset
+
+**Final Output**
+- `data/processed/filtered_complaints.csv` (50 records)
+- `data/processed/filtered_complaints_sample.csv`
+
+**Key Insights**
+- Complaint data is highly imbalanced by product
+- Very few records contain usable narrative text
+- Filtering and preprocessing are critical before embedding
+
+➡️ **Next Step**: Task 2 – Text chunking, embeddings, and vector store creation
