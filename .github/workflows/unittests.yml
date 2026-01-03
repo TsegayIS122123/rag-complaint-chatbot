@@ -1,20 +1,34 @@
-name: Test
+name: Python Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Python
+    - name: Set up Python 3.10
       uses: actions/setup-python@v4
       with:
         python-version: "3.10"
     
-    - name: Install and Test
+    - name: Install Task 1 dependencies
       run: |
-        pip install -r requirements.txt
-        python -c "import pandas; print('OK')"
+        python -m pip install --upgrade pip
+        pip install pandas numpy scikit-learn nltk matplotlib seaborn pytest
+    
+    - name: Run basic import test
+      run: |
+        python -c "import pandas; print('✅ pandas installed')"
+        python -c "import numpy; print('✅ numpy installed')"
+        python -c "import nltk; print('✅ nltk installed')"
+    
+    - name: Run tests
+      run: |
         pytest tests/ -v
