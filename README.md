@@ -130,4 +130,52 @@ This project delivers an **internal AI intelligence platform** that enables stak
 - Very few records contain usable narrative text
 - Filtering and preprocessing are critical before embedding
 
-➡️ **Next Step**: Task 2 – Text chunking, embeddings, and vector store creation
+---
+
+## 📌 Task 2: Text Chunking & Embedding Preparation
+
+### 🎯 Objective
+Prepare customer complaint narratives for Retrieval-Augmented Generation (RAG)
+using the **pre-built embeddings dataset** provided by the challenge.
+
+---
+
+### 📥 Input Data
+- `complaint_embeddings.parquet` (~2.2 GB, pre-built)
+- `complaints.csv` (raw complaints)
+- `filtered_complaints.csv` (output from Task 1)
+
+---
+
+### 🔪 Chunking Strategy
+- **Chunk size:** 500 characters  
+- **Chunk overlap:** 50 characters  
+- **Method:** Recursive character splitting  
+- **Embedding model:** `sentence-transformers/all-MiniLM-L6-v2` (pre-built)
+- **Vector database:** ChromaDB
+
+This strategy balances semantic completeness with efficient vector search
+across large-scale complaint data.
+
+---
+
+### 📊 Sampling Strategy
+To enable fast experimentation, a **stratified sample of 10,000 chunks** was created
+from the full embeddings dataset (~1.37M chunks), preserving proportional
+representation across product categories:
+
+- Credit card: ~40%
+- Personal loan: ~30%
+- Savings account: ~20%
+- Money transfers: ~10%
+
+
+### ✅ Task 2 Status
+✔ Chunking strategy documented  
+✔ Pre-built embeddings integrated  
+✔ Vector store structure prepared 
+ 
+# Next Steps
+- **Task 3**: Build RAG pipeline using pre-built embeddings
+- **Task 4**: Create Gradio chat interface
+- **Final**: Deploy working system for CrediTrust stakeholders
