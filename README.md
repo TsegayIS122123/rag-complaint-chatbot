@@ -175,7 +175,45 @@ representation across product categories:
 ✔ Pre-built embeddings integrated  
 ✔ Vector store structure prepared 
  
-# Next Steps
-- **Task 3**: Build RAG pipeline using pre-built embeddings
-- **Task 4**: Create Gradio chat interface
-- **Final**: Deploy working system for CrediTrust stakeholders
+## 🤖 Task 3: RAG Core Logic & Evaluation
+
+### 🎯 Objective
+Build a complete Retrieval-Augmented Generation (RAG) pipeline that enables intelligent Q&A over complaint data, with comprehensive evaluation of system performance.
+
+### 🏗️ System Architecture
+┌─────────────┐ ┌──────────────┐ ┌──────────────┐ ┌─────────────┐
+│ User │ │ Retriever │ │ Generator │ │ Output │
+│ Question │───▶│ Function │───▶│ (LLM) │───▶│ Answer │
+└─────────────┘ └──────────────┘ └──────────────┘ └─────────────┘
+│ │
+▼ ▼
+┌──────────────┐ ┌──────────────┐
+│ Vector │ │ Prompt │
+│ Database │ │ Template │
+│ (ChromaDB) │ │ (Analyst) │
+└──────────────┘ └──────────────┘
+
+### ✅ Core Components Implemented
+
+#### 1. **Retriever Function** (`retrieve_similar_chunks()`)
+- **Input**: User question (string)
+- **Process**: Semantic search using mock embeddings (production: all-MiniLM-L6-v2)
+- **Output**: Top-k relevant complaint chunks with metadata
+- **Features**: Product-based filtering, similarity scoring, source attribution
+
+#### 2. **Prompt Template Design**
+```python
+PROMPT_TEMPLATE = """
+You are a financial analyst assistant for CrediTrust Financial.
+
+CONTEXT FROM COMPLAINTS:
+{context}
+
+QUESTION: {question}
+
+INSTRUCTIONS:
+1. Analyze complaints to answer the question
+2. Provide actionable insights  
+3. Suggest improvements
+
+ANSWER:"""
