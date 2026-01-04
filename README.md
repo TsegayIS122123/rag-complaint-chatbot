@@ -217,3 +217,32 @@ INSTRUCTIONS:
 3. Suggest improvements
 
 ANSWER:"""
+## 💬 Task 4: Interactive Chat Interface (Gradio/Streamlit)
+
+### 🎯 Objective
+Build a user-friendly interface for internal teams to query customer complaints and receive **actionable insights** in real time.
+
+---
+
+### 🖥️ Features Implemented
+
+1. **Natural Language Question Input**
+   - Users can type questions in plain English (e.g., "What are the main issues with Credit Cards?").
+
+2. **AI-Powered Responses**
+   - The RAG pipeline retrieves relevant complaint excerpts and generates a concise answer using the LLM.
+   - Answers include actionable insights and recommendations where possible.
+
+3. **Source Transparency**
+   - Retrieved complaint chunks are displayed below the AI-generated answer.
+   - Users can verify the context behind each response.
+
+4. **Multi-Product Support**
+   - Filter queries by product category (Credit Cards, Personal Loans, Savings Accounts, Money Transfers).
+
+5. **Interactive Controls**
+   - "Submit/Ask" button to generate responses
+   - "Clear" button to reset the conversation
+   - Optional streaming of answer text for improved UX
+
+---
