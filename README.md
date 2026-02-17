@@ -13,26 +13,6 @@ Currently, valuable customer feedback is locked inside long, unstructured narrat
 This project delivers an **internal AI intelligence platform** that enables stakeholders to ask **natural-language questions** and receive **evidence-backed answers** in seconds.
 
 ---
-## 🚀 Live Demo
-
-[![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Space-yellow)](https://huggingface.co/spaces/YOUR_USERNAME/credirust-rag-chatbot)
-[![CI/CD](https://github.com/YOUR_USERNAME/rag-complaint-chatbot/actions/workflows/unittests.yml/badge.svg)](https://github.com/YOUR_USERNAME/rag-complaint-chatbot/actions)
-[![Python](https://img.shields.io/badge/Python-3.10-blue)](https://python.org)
-[![RAG](https://img.shields.io/badge/RAG-Powered-green)](https://github.com/your-repo)
-
-### 🌐 **Try the Chatbot Now**
-
-👉 **[Live Demo on Hugging Face Spaces](https://huggingface.co/spaces/YOUR_USERNAME/credirust-rag-chatbot)**
-
-### 📊 **Deployment Status**
-
-| Component | Technology | Status |
-|-----------|------------|--------|
-| Frontend | Gradio |   Live |
-| Backend | Python + ChromaDB |   Live |
-| Vector DB | ChromaDB |   1.37M vectors |
-| Embeddings | all-MiniLM-L6-v2 |  384-dim |
-| LLM | Microsoft Phi-2 |  CPU optimized |
 
 ### 🏗️ **Architecture**
 
@@ -44,11 +24,12 @@ graph TD
     D --> E[LLM (Phi-2)]
     E --> F[Answer + Sources]
     F --> G[Gradio UI]
+```    
 
 [alt text](image.png)
 [alt text](image-1.png)
 [alt text](image-2.png)
-[alt text](image-3.png)
+git[alt text](image-3.png)
 
 
 ## 🎯 Strategic Goals
