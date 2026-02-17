@@ -12,24 +12,12 @@ Currently, valuable customer feedback is locked inside long, unstructured narrat
 
 This project delivers an **internal AI intelligence platform** that enables stakeholders to ask **natural-language questions** and receive **evidence-backed answers** in seconds.
 
----
+---    
 
-### 🏗️ **Architecture**
-
-```mermaid
-graph TD
-    A[User Question] --> B[Embedding Model]
-    B --> C[ChromaDB Search]
-    C --> D[Retrieved Complaints]
-    D --> E[LLM (Phi-2)]
-    E --> F[Answer + Sources]
-    F --> G[Gradio UI]
-```    
-
-[alt text](image.png)
-[alt text](image-1.png)
-[alt text](image-2.png)
-git[alt text](image-3.png)
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
 
 
 ## 🎯 Strategic Goals
