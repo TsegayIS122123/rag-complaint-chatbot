@@ -1,6 +1,6 @@
 """
-CrediTrust Complaint Analysis Chatbot
-FIXED for Gradio 4.44.1 - ULTRA FAST & STABLE
+CrediTrust Complaint Analysis - FAST REAL RAG
+Loads in < 30 seconds! - FIXED for Gradio 6.5.1
 """
 
 import gradio as gr
@@ -9,87 +9,138 @@ sys.path.append('.')
 
 from src.rag_pipeline import get_rag
 
-# Initialize RAG
-print("🚀 Starting CrediTrust Chatbot...")
+print("🚀 Starting FAST REAL RAG...")
 rag = get_rag()
-print("✅ Ready! Ask me anything.\n")
+print("✅ Ready! Ask me anything about complaints.\n")
 
-def chat(question, history):
-    """Chat function for Gradio 4.x."""
+def process(question, history, product_filter):
+    """Process question with REAL data - FIXED for Gradio 6.5.1."""
     if not question:
-        return "", history
+        return "", "", history
     
-    result = rag.ask(question)
+    # Get REAL answer
+    result = rag.ask(question, product_filter)
     
     # Format sources
-    sources_text = "### 📚 Source Complaints\n\n"
+    sources = "### 📚 REAL Complaint Sources\n\n"
     for i, src in enumerate(result['sources'], 1):
-        product = src.get('metadata', {}).get('product', 'Unknown')
+        product = src.get('product', 'Unknown')
         text = src.get('text', '')[:150]
-        sources_text += f"**{i}. {product}**\n> {text}...\n\n"
+        sources += f"**{i}. {product}**\n> {text}...\n\n"
     
-    # Update history
-    history = history or []
+    # FIXED: Initialize history if None
+    if history is None:
+        history = []
+    
+    # FIXED: Gradio 6.x uses tuple format (user, assistant)
     history.append((question, result['answer']))
     
-    return result['answer'], sources_text, history
+    return result['answer'], sources, history
 
 def clear():
-    return "", "", []
+    """Clear everything."""
+    return "", "", "All Products", []
 
-# Simple CSS
-css = """
-.gradio-container { max-width: 1200px !important; margin: auto !important; background: white !important; }
-h1 { color: #1e3c72 !important; font-weight: 700 !important; }
-h1, h2, h3, p, label { color: #333333 !important; }
-"""
+# Product options
+products = ["All Products", "Credit Card", "Personal Loan", "Savings Account", "Money Transfer"]
 
-# Create interface
-with gr.Blocks(title="CrediTrust Complaint Analysis", css=css) as demo:
-    gr.Markdown("# 🏦 CrediTrust Complaint Analysis Chatbot")
-    gr.Markdown("### Ask questions about customer complaints")
+# UI
+with gr.Blocks(title="CrediTrust FAST REAL RAG", theme=gr.themes.Soft()) as demo:
+    gr.Markdown("# 🏦 CrediTrust Financial - FAST REAL RAG")
+    gr.Markdown("*Using REAL complaint data - Loads in < 30 seconds!*")
     
     with gr.Row():
         with gr.Column(scale=2):
-            chatbot = gr.Chatbot(label="Conversation History", height=400)
+            # FIXED: No type parameter needed for Gradio 6.x
+            chatbot = gr.Chatbot(label="Conversation", height=400)
+            
+            filter_dropdown = gr.Dropdown(
+                choices=products,
+                value="All Products",
+                label="Filter by Product"
+            )
+            
             question = gr.Textbox(
-                label="Ask a question",
-                placeholder="What are credit card complaints?",
+                label="Ask about complaints",
+                placeholder="What are customers saying about credit cards?",
                 lines=2
             )
+            
             with gr.Row():
-                submit = gr.Button("🔍 Analyze", variant="primary")
-                clear_btn = gr.Button("🗑️ Clear")
+                submit = gr.Button("🔍 Analyze", variant="primary", size="lg")
+                clear_btn = gr.Button("🗑️ Clear", variant="secondary")
         
         with gr.Column(scale=2):
-            answer = gr.Textbox(label="📋 Analysis", lines=12, interactive=False)
-            sources = gr.Markdown(label="📚 Sources", value="*Sources will appear here*")
+            answer = gr.Markdown(
+                label="📋 REAL Analysis",
+                value="*Ask a question to see REAL analysis*",
+                line_breaks=True
+            )
+            
+            sources = gr.Markdown(
+                label="📚 REAL Sources",
+                value="*Sources will appear here*",
+                line_breaks=True
+            )
     
     state = gr.State([])
     
-    submit.click(chat, [question, state], [answer, sources, state]
-    ).then(lambda: "", None, question
-    ).then(lambda s: s, state, chatbot)
+    # Events
+    submit.click(
+        process, 
+        [question, state, filter_dropdown],
+        [answer, sources, state]
+    ).then(
+        lambda: "", None, question
+    ).then(
+        lambda s: s, state, chatbot
+    )
     
-    question.submit(chat, [question, state], [answer, sources, state]
-    ).then(lambda: "", None, question
-    ).then(lambda s: s, state, chatbot)
+    question.submit(
+        process,
+        [question, state, filter_dropdown],
+        [answer, sources, state]
+    ).then(
+        lambda: "", None, question
+    ).then(
+        lambda s: s, state, chatbot
+    )
     
-    clear_btn.click(clear, None, [answer, sources, state]
-    ).then(lambda: [], None, chatbot)
+    clear_btn.click(
+        clear,
+        None,
+        [answer, sources, filter_dropdown, state]
+    ).then(
+        lambda: [], None, chatbot
+    )
     
-    gr.Markdown("### 💡 Try these examples")
-    examples = ["Credit card complaints", "Loan problems", "Money transfer issues", "Savings account issues"]
-    for ex in examples:
-        gr.Button(ex, size="sm").click(lambda q=ex: q, None, question)
+    # Examples
+    gr.Markdown("### 💡 Try These Questions")
+    with gr.Row():
+        examples = [
+            ("💳 Credit Cards", "What are credit card complaints?"),
+            ("💰 Personal Loans", "What issues with personal loans?"),
+            ("🏦 Savings Accounts", "Savings account problems?"),
+            ("💸 Money Transfers", "Money transfer issues?")
+        ]
+        
+        for label, q in examples:
+            # FIXED: Button click sets question properly
+            btn = gr.Button(label, size="sm")
+            btn.click(
+                fn=lambda q=q: q,
+                outputs=question
+            )
 
 if __name__ == "__main__":
     print("\n" + "="*50)
     print("🌐 Open: http://localhost:7860")
+    print("🚀 FAST REAL RAG - Ready in < 30 seconds!")
     print("="*50 + "\n")
+    
     demo.launch(
-        server_name="127.0.0.1", cd # Changed from 0.0.0.0 to 127.0.0.1
+        server_name="127.0.0.1",
         server_port=7860,
         quiet=False,
-        share=False  # Don't create public link
+        show_error=True
     )
